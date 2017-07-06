@@ -2,4 +2,5 @@
 !.gitignore
 !build.gradle
 !settings.gradle
+!README.md
 !/src/
