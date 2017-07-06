@@ -1,2 +1,2 @@
 # ZConverter
-Prepare your scripts!
+ZConverter converts scripts from the MineTweaker3 format (.zs) in the Recipenator format (.lua)
