@@ -4,9 +4,7 @@ import stanhebben.zenscript.ZenParsedFile;
 import stanhebben.zenscript.ZenTokener;
 import stanhebben.zenscript.statements.Statement;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ZConverter {
+    private static String UTF8 = "UTF-8";
+
     public static String convert(String input) {
         try {
             Path path = Paths.get(input);
@@ -25,23 +25,33 @@ public class ZConverter {
 
             for (File file : files) {
                 if (!file.getName().endsWith(".zs")) continue;
-
-                String zsCode = Files.readAllLines(file.toPath())
-                        .stream().collect(Collectors.joining(System.lineSeparator()));
+                String zsCode = readAllText(file);
                 String luaCode = convertScript(zsCode);
-                Files.write(path, luaCode.getBytes(Charset.defaultCharset()));
+                writeAllText(toLua(file.getAbsolutePath()), luaCode);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return input;
         }
 
         try {
             return convertScript(input);
         } catch (IOException e) {
             e.printStackTrace();
+            return input;
         }
+    }
 
-        return input;
+    private static void writeAllText(String path, String text) throws IOException {
+        Files.write(Paths.get(path), text.getBytes(UTF8));
+    }
+
+    private static String toLua(String path) {
+        return path.substring(0, path.lastIndexOf('.')) + ".lua";
+    }
+
+    private static String readAllText(File file) throws IOException {
+        return new String(Files.readAllBytes(file.toPath()), UTF8);
     }
 
     private static String convertScript(String input) throws IOException {
