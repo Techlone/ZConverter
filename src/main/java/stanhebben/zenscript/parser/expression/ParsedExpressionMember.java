@@ -42,6 +42,6 @@ public class ParsedExpressionMember extends ParsedExpression {
 	}
 
 	private String toLuaInternal(boolean isCall) {
-		return value.toLua() + (isCall ? ":" : ".") + member;
+		return value + (isCall ? ":" : ".") + member;
 	}
 }

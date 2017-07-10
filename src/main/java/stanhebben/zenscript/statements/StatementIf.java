@@ -52,8 +52,8 @@ public class StatementIf extends Statement {
 
 	@Override
 	public StringBuilder toLua(StringBuilder sb) {
-		onThen.toLua(sb.append("if ").append(condition.toLua()).append(" then").append(nl));
+		onThen.toLua(sb.append("if ").append(condition).append(" then").append(nl));
 		if (onElse != null) onElse.toLua(sb.append("else").append(nl));
-		return sb.append("end").append(nl);
+		return sb.append("end");
 	}
 }

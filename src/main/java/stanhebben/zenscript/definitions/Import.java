@@ -35,4 +35,17 @@ public class Import {
 	public String getRename() {
 		return rename == null ? name.get(name.size() - 1) : rename;
 	}
+
+	@Override
+	public String toString() {
+		return toLua();
+	}
+
+	public String toLua() {
+		return "local " + (rename != null ? rename : name.get(name.size() - 1)) + " = " + getRnImport();
+	}
+
+	private String getRnImport() {
+		return String.join(".", name);
+	}
 }

@@ -113,7 +113,8 @@ public abstract class Statement {
 
 	public abstract void compile(IEnvironmentMethod environment);
 
-	public String toLua() {
+	@Override
+	public String toString() {
 		return toLua(new StringBuilder()).toString();
 	}
 

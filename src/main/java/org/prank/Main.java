@@ -3,6 +3,7 @@ package org.prank;
 import stanhebben.zenscript.statements.Statement;
 
 import javax.swing.*;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
@@ -10,28 +11,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+
 public class Main extends JFrame {
+    private static boolean DEBUG;
+
     private JTextPane zsTextPane;
     private JTextPane luaTextPane;
 
     public static void main(String[] args) {
+        for (String arg : args) if (arg.equals("--debug")) DEBUG = true;
         new Main();
     }
 
     public Main() {
-        Font verdana = new Font("Verdana", Font.PLAIN, 14);
+        Font verdana = new Font("Verdana", Font.BOLD, 14);
 
         JButton pasteButton = createButton("Paste from clipboard", new PasteAction());
         JButton convertButton = createButton("Convert", new ConvertAction());
         JButton copyButton = createButton("Copy in clipboard", new CopyAction());
 
-        JScrollPane zsScrollPane = createScrollPane(zsTextPane = new JTextPane());
+        JScrollPane zsScrollPane = createScrollPane(zsTextPane = new JTextWrapPane());
         tuneTextPane(zsTextPane, verdana);
-        zsTextPane.setText("//Paste ZenScript code here " + System.lineSeparator() +
-                "//Or a full path to a folder with scripts");
-        //zsTextPane.setText(getFile("test.zs"));
 
-        JScrollPane luaScrollPane = createScrollPane(luaTextPane = new JTextPane());
+        JScrollPane luaScrollPane = createScrollPane(luaTextPane = new JTextWrapPane());
         tuneTextPane(luaTextPane, verdana);
 
         setLayout(new GridBagLayout());
@@ -78,6 +81,12 @@ public class Main extends JFrame {
         setMinimumSize(new Dimension(640, 480));
         pack();
         setVisible(true);
+
+        zsTextPane.setText("//Paste ZenScript code here " + System.lineSeparator() +
+                "//Or a full path to a folder with scripts");
+        if (DEBUG) {
+            zsTextPane.setText(getFile("test.zs"));
+        }
     }
 
     private JButton createButton(String text, AbstractAction action) {
@@ -148,5 +157,15 @@ public class Main extends JFrame {
             e.printStackTrace();
         }
         return result.toString();
+    }
+
+    class JTextWrapPane extends JTextPane {
+        JTextWrapPane() {
+            super();
+        }
+        @Override
+        public boolean getScrollableTracksViewportWidth() {
+            return getUI().getPreferredSize(this).width <= getParent().getSize().width;
+        }
     }
 }

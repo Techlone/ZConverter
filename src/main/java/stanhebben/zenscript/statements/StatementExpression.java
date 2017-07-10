@@ -23,6 +23,6 @@ public class StatementExpression extends Statement {
 
 	@Override
 	StringBuilder toLua(StringBuilder sb) {
-		return sb.append(expression.toLua()).append(nl);
+		return sb.append(expression);
 	}
 }
