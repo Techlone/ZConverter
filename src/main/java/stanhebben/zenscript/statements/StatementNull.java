@@ -22,9 +22,4 @@ public class StatementNull extends Statement {
 	public void compile(IEnvironmentMethod environment) {
 
 	}
-
-	@Override
-	StringBuilder toLua(StringBuilder sb) {
-		return sb;
-	}
 }

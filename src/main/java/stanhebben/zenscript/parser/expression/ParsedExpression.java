@@ -469,7 +469,7 @@ public abstract class ParsedExpression {
 	}
 
 	public String toLua() {
-		throw new RuntimeException("Implement me!");
+		return "-- Can't convert " + getClass().getSimpleName();
 	};
 
 	public String toLuaCall() {

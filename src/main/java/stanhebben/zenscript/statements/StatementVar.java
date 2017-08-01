@@ -53,6 +53,6 @@ public class StatementVar extends Statement {
 
 	@Override
 	StringBuilder toLua(StringBuilder sb) {
-		return sb;
+		return sb.append("local ").append(name).append(" = ").append(initializer);
 	}
 }

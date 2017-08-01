@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,13 @@ public class ZConverter {
             if (!src.isDirectory()) return input + " is not a folder!";
 
             File[] files = src.listFiles();
-            if (files == null) return "No ZS files found";
+            if (files == null || files.length == 0) return "No files found";
+
+            File[] zsFiles = Arrays.stream(files).filter(file -> file.getName().endsWith(".zs")).toArray(File[]::new);
+            if (zsFiles.length == 0) return "No scripts found";
+
             StringBuilder convertedFiles = new StringBuilder("Converted files:" + nl);
             for (File file : files) {
-                if (!file.getName().endsWith(".zs")) continue;
                 String zsCode = readAllText(file);
                 String luaCode = convertScript(zsCode);
                 String luaPath = toLua(file.getAbsolutePath());

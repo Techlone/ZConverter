@@ -42,6 +42,7 @@ public class Import {
 	}
 
 	public String toLua() {
+		if (name.get(0).equals("minetweaker")) return "";
 		return "local " + (rename != null ? rename : name.get(name.size() - 1)) + " = " + getRnImport();
 	}
 

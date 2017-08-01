@@ -48,6 +48,6 @@ public class ParsedExpressionCall extends ParsedExpression {
 
 	@Override
 	public String toLua() {
-		return receiver.toLuaCall() + "(" + join(arguments) + ")" + nl;
+		return receiver.toLuaCall() + "(" + join(arguments) + ")";
 	}
 }

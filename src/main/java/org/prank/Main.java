@@ -3,15 +3,12 @@ package org.prank;
 import stanhebben.zenscript.statements.Statement;
 
 import javax.swing.*;
-import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 
 public class Main extends JFrame {
     private static boolean DEBUG;
@@ -44,7 +41,7 @@ public class Main extends JFrame {
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridwidth = 3;
-        c.insets = new Insets(5,5,0,5);
+        c.insets = new Insets(5, 5, 0, 5);
         add(zsScrollPane, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -53,17 +50,17 @@ public class Main extends JFrame {
         c.weighty = 0.0;
         c.weightx = 0.5;
         c.gridwidth = 1;
-        c.insets = new Insets(5,5,0,0);
+        c.insets = new Insets(5, 5, 0, 0);
         add(pasteButton, c);
 
         c.gridy = 1;
         c.gridx = 1;
-        c.insets = new Insets(5,5,0,0);
+        c.insets = new Insets(5, 5, 0, 0);
         add(convertButton, c);
 
         c.gridy = 1;
         c.gridx = 2;
-        c.insets = new Insets(5,5,0,5);
+        c.insets = new Insets(5, 5, 0, 5);
         add(copyButton, c);
 
         c.fill = GridBagConstraints.BOTH;
@@ -72,15 +69,17 @@ public class Main extends JFrame {
         c.weighty = 1.0;
         c.weightx = 0;
         c.gridwidth = 3;
-        c.insets = new Insets(5,5,5,5);
+        c.insets = new Insets(5, 5, 5, 5);
         add(luaScrollPane, c);
 
         setTitle("ZConverter");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(640, 480));
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setMinimumSize(new Dimension(dim.width / 2, dim.height / 2));
         pack();
         setVisible(true);
+        this.setLocation(dim.width / 4, dim.height / 4);
 
         zsTextPane.setText("//Paste ZenScript code here " + System.lineSeparator() +
                 "//Or a full path to a folder with scripts");

@@ -27,6 +27,10 @@ public class StatementBlock extends Statement {
 
 	@Override
 	StringBuilder toLua(StringBuilder sb) {
+		if (statements.size() != 0)
+			sb.append("    ").append(statements.get(0));
+		for (int i = 1; i < statements.size(); i++)
+			sb.append(nl).append("    ").append(statements.get(i));
 		return sb;
 	}
 }

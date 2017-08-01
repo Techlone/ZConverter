@@ -41,9 +41,4 @@ public class StatementReturn extends Statement {
 			environment.getOutput().returnType(returnType);
 		}
 	}
-
-	@Override
-	StringBuilder toLua(StringBuilder sb) {
-		return sb;
-	}
 }

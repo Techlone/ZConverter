@@ -97,11 +97,12 @@ public class BracketExpression extends Expression {
     private String toOreGetter() {
         boolean hasWildcard = false;
         StringBuilder sb = new StringBuilder();
-        for (Token token : tokens) {
+        for (int i = 2; i < tokens.size(); i++) {
+            Token token = tokens.get(i);
             sb.append(token.getValue());
             if (token.getType() == ZenTokener.T_MUL) hasWildcard = true;
         }
-        if (hasWildcard) return "ores:get(\"" + sb.toString() + "\")";
+        if (hasWildcard) return "ores[\"" + sb.toString() + "\"]";
         return "ores." + tokens.get(2).getValue();
     }
 }

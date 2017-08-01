@@ -62,6 +62,14 @@ public class StatementForeach extends Statement {
 
 	@Override
 	StringBuilder toLua(StringBuilder sb) {
-		return sb;
+		sb.append("for ");
+		if (varnames.length == 1) {
+			sb.append("_, ").append(varnames[0]);
+		} else {
+			sb.append(String.join(", ", varnames));
+		}
+		return sb.append(" in pairs(").append(list).append(") do").append(nl)
+				.append(body).append(nl)
+				.append("end");
 	}
 }

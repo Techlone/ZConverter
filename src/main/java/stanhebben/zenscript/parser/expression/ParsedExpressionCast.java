@@ -33,4 +33,9 @@ public class ParsedExpressionCast extends ParsedExpression {
 			.eval(environment)
 			.cast(getPosition(), environment, type);
 	}
+
+	@Override
+	public String toLua() {
+		return value.toString();
+	}
 }

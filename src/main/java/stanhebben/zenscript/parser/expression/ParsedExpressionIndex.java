@@ -35,4 +35,9 @@ public class ParsedExpressionIndex extends ParsedExpression {
 		Expression cIndex = index.compile(environment, null).eval(environment);
 		return cValue.getType().binary(getPosition(), environment, cValue, cIndex, OperatorType.INDEXGET);
 	}
+
+	@Override
+	public String toLua() {
+		return value + "[" + index + "]";
+	}
 }

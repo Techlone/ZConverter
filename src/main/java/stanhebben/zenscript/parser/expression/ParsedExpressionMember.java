@@ -33,6 +33,8 @@ public class ParsedExpressionMember extends ParsedExpression {
 
 	@Override
 	public String toLua() {
+		if (member.equals("items"))
+			return value.toString();
 		return toLuaInternal(false);
 	}
 
