@@ -8,6 +8,8 @@ import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.parser.expression.ParsedExpression;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
+import stanhebben.zenscript.type.ZenTypeBool;
 import stanhebben.zenscript.type.casting.ICastingRule;
 import stanhebben.zenscript.util.ZenPosition;
 
@@ -45,7 +47,7 @@ public abstract class Expression implements IPartialExpression {
 	public abstract void compile(boolean result, IEnvironmentMethod environment);
 
 	public void compileIf(Label onElse, IEnvironmentMethod environment) {
-		if (getType() == ZenType.BOOL) {
+		if (getType() == ZenTypeBool.INSTANCE) {
 			compile(true, environment);
 			environment.getOutput().ifEQ(onElse);
 		} else if (getType().isPointer()) {
@@ -94,6 +96,6 @@ public abstract class Expression implements IPartialExpression {
 	@Override
 	public ZenType toType(IEnvironmentGlobal environment) {
 		environment.error(position, "not a valid type");
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 }

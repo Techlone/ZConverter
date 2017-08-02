@@ -45,7 +45,7 @@ public class TypeRegistry implements ITypeRegistry {
 	public TypeRegistry() {
 		types = new HashMap<Class, ZenType>();
 
-		types.put(boolean.class, ZenType.BOOL);
+		types.put(boolean.class, ZenTypeBool.INSTANCE);
 		types.put(byte.class, ZenTypeByte.INSTANCE);
 		types.put(short.class, ZenTypeShort.INSTANCE);
 		types.put(int.class, ZenTypeInt.INSTANCE);

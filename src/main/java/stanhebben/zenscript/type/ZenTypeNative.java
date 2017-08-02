@@ -315,7 +315,7 @@ public class ZenTypeNative extends ZenType {
 				}
 			}
 			if (member2 == null) {
-				if (hasBinary(STRING, OperatorType.MEMBERGETTER)) {
+				if (hasBinary(ZenTypeString.INSTANCE, OperatorType.MEMBERGETTER)) {
 					return binary(
 							position,
 							environment,
@@ -425,11 +425,11 @@ public class ZenTypeNative extends ZenType {
 			}
 		}
 
-		rules.registerCastingRule(BOOL, new CastingNotNull(this));
-		rules.registerCastingRule(ANY, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
+		rules.registerCastingRule(ZenTypeBool.INSTANCE, new CastingNotNull(this));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
 				getAnyClassName(environment),
 				"valueOf",
-				ANY,
+                ZenTypeAny.INSTANCE,
 				this)));
 	}
 

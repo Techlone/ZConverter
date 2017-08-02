@@ -34,4 +34,9 @@ public class ParsedExpressionUnary extends ParsedExpression {
 		Expression cValue = value.compile(environment, predictedType).eval(environment);
 		return cValue.getType().unary(getPosition(), environment, cValue, operator);
 	}
+
+	@Override
+	public String toLua() {
+		return operator + " " + value;
+	}
 }

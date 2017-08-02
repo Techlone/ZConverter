@@ -8,6 +8,7 @@ package stanhebben.zenscript.expression;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeVoid;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -29,7 +30,7 @@ public class ExpressionArraySet extends Expression {
 
 	@Override
 	public ZenType getType() {
-		return ZenType.VOID;
+		return ZenTypeVoid.INSTANCE;
 	}
 
 	@Override

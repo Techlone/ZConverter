@@ -7,9 +7,12 @@
 package stanhebben.zenscript.definitions;
 
 import static stanhebben.zenscript.ZenTokener.*;
+import static stanhebben.zenscript.statements.Statement.nl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.prank.ZConverter;
 import stanhebben.zenscript.ZenTokener;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.parser.Token;
@@ -131,5 +134,18 @@ public class ParsedFunction {
 
 	public Statement[] getStatements() {
 		return statements;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("function ").append(name).append("(").append(ZConverter.join(arguments)).append(")").append(nl);
+		ZConverter.IndentDeep++;
+		for (Statement statement : statements) {
+			sb.append(ZConverter.getIndent()).append(statement).append(nl);
+		}
+		ZConverter.IndentDeep--;
+		sb.append("end");
+		return sb.toString();
 	}
 }

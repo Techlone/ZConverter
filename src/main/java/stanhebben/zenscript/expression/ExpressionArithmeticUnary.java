@@ -36,7 +36,7 @@ public class ExpressionArithmeticUnary extends Expression {
 		MethodOutput output = environment.getOutput();
 		if (result) {
 			ZenType type = base.getType();
-			if (type == ZenType.BOOL) {
+			if (type == ZenTypeBool.INSTANCE) {
 				if (operator == OperatorType.NOT) {
 					output.iNot();
 					return;
@@ -71,5 +71,10 @@ public class ExpressionArithmeticUnary extends Expression {
 		}
 
 		environment.error(getPosition(), "Invalid operation");
+	}
+
+	@Override
+	public String toLua() {
+		return operator + " " + base;
 	}
 }

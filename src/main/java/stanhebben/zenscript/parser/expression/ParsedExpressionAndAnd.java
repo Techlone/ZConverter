@@ -34,4 +34,9 @@ public class ParsedExpressionAndAnd extends ParsedExpression {
 				left.compile(environment, predictedType).eval(environment),
 				right.compile(environment, predictedType).eval(environment));
 	}
+
+	@Override
+	public String toLua() {
+		return left + " and " + right;
+	}
 }

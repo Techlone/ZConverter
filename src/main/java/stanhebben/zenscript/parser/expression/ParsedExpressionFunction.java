@@ -8,6 +8,8 @@ package stanhebben.zenscript.parser.expression;
 
 import java.lang.reflect.Method;
 import java.util.List;
+
+import org.prank.ZConverter;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.definitions.ParsedFunctionArgument;
 import stanhebben.zenscript.expression.ExpressionFunction;
@@ -19,6 +21,8 @@ import stanhebben.zenscript.type.ZenType;
 import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.type.ZenTypeNative;
 import stanhebben.zenscript.util.ZenPosition;
+
+import static stanhebben.zenscript.statements.Statement.nl;
 
 /**
  *
@@ -79,5 +83,18 @@ public class ParsedExpressionFunction extends ParsedExpression {
 			System.out.println("No known predicted type");
 			return new ExpressionFunction(getPosition(), arguments, returnType, statements);
 		}
+	}
+
+	@Override
+	public String toLua() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("function").append("(").append(ZConverter.join(arguments)).append(")").append(nl);
+		ZConverter.IndentDeep++;
+		for (Statement statement : statements) {
+			sb.append(ZConverter.getIndent()).append(statement).append(nl);
+		}
+		ZConverter.IndentDeep--;
+		sb.append(ZConverter.getIndent()).append("end");
+		return sb.toString();
 	}
 }

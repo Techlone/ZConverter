@@ -8,6 +8,8 @@ package stanhebben.zenscript.type.casting;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
+import stanhebben.zenscript.type.ZenTypeLong;
 import stanhebben.zenscript.value.IAny;
 
 /**
@@ -27,11 +29,11 @@ public class CastingAnyLong implements ICastingRule {
 
 	@Override
 	public ZenType getInputType() {
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 
 	@Override
 	public ZenType getResultingType() {
-		return ZenType.LONG;
+		return ZenTypeLong.INSTANCE;
 	}
 }

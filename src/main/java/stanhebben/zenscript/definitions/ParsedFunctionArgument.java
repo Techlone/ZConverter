@@ -22,4 +22,9 @@ public class ParsedFunctionArgument {
 	public ZenType getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

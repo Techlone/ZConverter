@@ -10,6 +10,7 @@ import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -23,6 +24,6 @@ public class ParsedExpressionInvalid extends ParsedExpression {
 
 	@Override
 	public IPartialExpression compile(IEnvironmentMethod environment, ZenType predictedType) {
-		return new ExpressionInvalid(getPosition(), predictedType == null ? ZenType.ANY : predictedType);
+		return new ExpressionInvalid(getPosition(), predictedType == null ? ZenTypeAny.INSTANCE : predictedType);
 	}
 }

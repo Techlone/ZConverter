@@ -12,11 +12,11 @@ import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.expression.ExpressionCallStatic;
-import stanhebben.zenscript.expression.ExpressionCallVirtual;
 import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.type.natives.IJavaMethod;
 import stanhebben.zenscript.type.natives.JavaMethod;
 import static stanhebben.zenscript.util.StringUtil.methodMatchingError;
@@ -117,7 +117,7 @@ public class ZenExpandMember {
 		@Override
 		public ZenType toType(IEnvironmentGlobal environment) {
 			environment.error(position, "not a valid type");
-			return ZenType.ANY;
+			return ZenTypeAny.INSTANCE;
 		}
 
 		@Override
@@ -178,7 +178,7 @@ public class ZenExpandMember {
 		@Override
 		public ZenType toType(IEnvironmentGlobal environment) {
 			environment.error(position, "not a valid type");
-			return ZenType.ANY;
+			return ZenTypeAny.INSTANCE;
 		}
 
 		@Override

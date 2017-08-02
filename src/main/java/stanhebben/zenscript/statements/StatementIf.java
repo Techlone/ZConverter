@@ -1,10 +1,12 @@
 package stanhebben.zenscript.statements;
 
 import org.objectweb.asm.Label;
+import org.prank.ZConverter;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.parser.expression.ParsedExpression;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeBool;
 import stanhebben.zenscript.util.MethodOutput;
 import stanhebben.zenscript.util.ZenPosition;
 
@@ -25,12 +27,12 @@ public class StatementIf extends Statement {
 	public void compile(IEnvironmentMethod environment) {
 		environment.getOutput().position(getPosition());
 
-		Expression cCondition = condition.compile(environment, ZenType.BOOL)
+		Expression cCondition = condition.compile(environment, ZenTypeBool.INSTANCE)
 			.eval(environment)
-			.cast(getPosition(), environment, ZenType.BOOL);
+			.cast(getPosition(), environment, ZenTypeBool.INSTANCE);
 
 		ZenType expressionType = cCondition.getType();
-		if (expressionType.canCastImplicit(ZenType.BOOL, environment)) {
+		if (expressionType.canCastImplicit(ZenTypeBool.INSTANCE, environment)) {
 			Label labelEnd = new Label();
 			Label labelElse = onElse == null ? labelEnd : new Label();
 
@@ -52,8 +54,11 @@ public class StatementIf extends Statement {
 
 	@Override
 	public StringBuilder toLua(StringBuilder sb) {
-		sb.append("if ").append(condition).append(" then").append(nl).append(onThen).append(nl);
-		if (onElse != null) sb.append("else").append(nl).append(onElse).append(nl);
-		return sb.append("end");
+		sb.append("if ").append(condition).append(" then").append(nl)
+				.append(onThen).append(nl);
+		if (onElse != null)
+			sb.append(ZConverter.getIndent()).append("else").append(nl)
+					.append(onElse).append(nl);
+		return sb.append(ZConverter.getIndent()).append("end");
 	}
 }

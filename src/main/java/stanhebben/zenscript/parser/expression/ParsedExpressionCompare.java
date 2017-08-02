@@ -40,4 +40,21 @@ public class ParsedExpressionCompare extends ParsedExpression {
 		Expression cRight = right.compile(environment, null).eval(environment);
 		return cLeft.getType().compare(getPosition(), environment, cLeft, cRight, type);
 	}
+
+	@Override
+	public String toLua() {
+		return left + getLuaComparator() + right;
+	}
+
+	public String getLuaComparator() {
+		switch (type) {
+			case EQ: return " == ";
+			case NE: return " ~= ";
+			case GE: return " >= ";
+			case LE: return " <= ";
+			case GT: return " > ";
+			case LT: return " < ";
+		}
+		throw new RuntimeException(type.toString());
+	}
 }

@@ -68,21 +68,21 @@ public class ZenTypeAny extends ZenType {
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(BOOL, CastingAnyBool.INSTANCE);
-		rules.registerCastingRule(BOOLOBJECT, new CastingRuleNullableStaticMethod(BOOL_VALUEOF, CastingAnyBool.INSTANCE));
-		rules.registerCastingRule(BYTE, CastingAnyByte.INSTANCE);
-		rules.registerCastingRule(BYTEOBJECT, new CastingRuleNullableStaticMethod(BYTE_VALUEOF, CastingAnyByte.INSTANCE));
-		rules.registerCastingRule(SHORT, CastingAnyShort.INSTANCE);
-		rules.registerCastingRule(SHORTOBJECT, new CastingRuleNullableStaticMethod(SHORT_VALUEOF, CastingAnyShort.INSTANCE));
-		rules.registerCastingRule(INT, CastingAnyInt.INSTANCE);
-		rules.registerCastingRule(INTOBJECT, new CastingRuleNullableStaticMethod(INT_VALUEOF, CastingAnyInt.INSTANCE));
-		rules.registerCastingRule(LONG, CastingAnyLong.INSTANCE);
-		rules.registerCastingRule(LONGOBJECT, new CastingRuleNullableStaticMethod(LONG_VALUEOF, CastingAnyLong.INSTANCE));
-		rules.registerCastingRule(FLOAT, CastingAnyFloat.INSTANCE);
-		rules.registerCastingRule(FLOATOBJECT, new CastingRuleNullableStaticMethod(FLOAT_VALUEOF, CastingAnyFloat.INSTANCE));
-		rules.registerCastingRule(DOUBLE, CastingAnyDouble.INSTANCE);
-		rules.registerCastingRule(DOUBLEOBJECT, new CastingRuleNullableStaticMethod(DOUBLE_VALUEOF, CastingAnyDouble.INSTANCE));
-		rules.registerCastingRule(STRING, CastingAnyString.INSTANCE);
+		rules.registerCastingRule(ZenTypeBool.INSTANCE, CastingAnyBool.INSTANCE);
+		rules.registerCastingRule(ZenTypeBoolObject.INSTANCE, new CastingRuleNullableStaticMethod(BOOL_VALUEOF, CastingAnyBool.INSTANCE));
+		rules.registerCastingRule(ZenTypeByte.INSTANCE, CastingAnyByte.INSTANCE);
+		rules.registerCastingRule(ZenTypeByteObject.INSTANCE, new CastingRuleNullableStaticMethod(BYTE_VALUEOF, CastingAnyByte.INSTANCE));
+		rules.registerCastingRule(ZenTypeShort.INSTANCE, CastingAnyShort.INSTANCE);
+		rules.registerCastingRule(ZenTypeShortObject.INSTANCE, new CastingRuleNullableStaticMethod(SHORT_VALUEOF, CastingAnyShort.INSTANCE));
+		rules.registerCastingRule(ZenTypeInt.INSTANCE, CastingAnyInt.INSTANCE);
+		rules.registerCastingRule(ZenTypeIntObject.INSTANCE, new CastingRuleNullableStaticMethod(INT_VALUEOF, CastingAnyInt.INSTANCE));
+		rules.registerCastingRule(ZenTypeLong.INSTANCE, CastingAnyLong.INSTANCE);
+		rules.registerCastingRule(ZenTypeLongObject.INSTANCE, new CastingRuleNullableStaticMethod(LONG_VALUEOF, CastingAnyLong.INSTANCE));
+		rules.registerCastingRule(ZenTypeFloat.INSTANCE, CastingAnyFloat.INSTANCE);
+		rules.registerCastingRule(ZenTypeFloatObject.INSTANCE, new CastingRuleNullableStaticMethod(FLOAT_VALUEOF, CastingAnyFloat.INSTANCE));
+		rules.registerCastingRule(ZenTypeDouble.INSTANCE, CastingAnyDouble.INSTANCE);
+		rules.registerCastingRule(ZenTypeDoubleObject.INSTANCE, new CastingRuleNullableStaticMethod(DOUBLE_VALUEOF, CastingAnyDouble.INSTANCE));
+		rules.registerCastingRule(ZenTypeString.INSTANCE, CastingAnyString.INSTANCE);
 
 		if (followCasters) {
 			constructExpansionCastingRules(environment, rules);
@@ -135,35 +135,35 @@ public class ZenTypeAny extends ZenType {
 	public Expression binary(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, OperatorType operator) {
 		switch (operator) {
 			case ADD:
-				return new ExpressionCallVirtual(position, environment, METHOD_ADD, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_ADD, left, right.cast(position, environment, INSTANCE));
 			case CAT:
-				return new ExpressionCallVirtual(position, environment, METHOD_CAT, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_CAT, left, right.cast(position, environment, INSTANCE));
 			case SUB:
-				return new ExpressionCallVirtual(position, environment, METHOD_SUB, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_SUB, left, right.cast(position, environment, INSTANCE));
 			case MUL:
-				return new ExpressionCallVirtual(position, environment, METHOD_MUL, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_MUL, left, right.cast(position, environment, INSTANCE));
 			case DIV:
-				return new ExpressionCallVirtual(position, environment, METHOD_DIV, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_DIV, left, right.cast(position, environment, INSTANCE));
 			case MOD:
-				return new ExpressionCallVirtual(position, environment, METHOD_MOD, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_MOD, left, right.cast(position, environment, INSTANCE));
 			case AND:
-				return new ExpressionCallVirtual(position, environment, METHOD_AND, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_AND, left, right.cast(position, environment, INSTANCE));
 			case OR:
-				return new ExpressionCallVirtual(position, environment, METHOD_OR, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_OR, left, right.cast(position, environment, INSTANCE));
 			case XOR:
-				return new ExpressionCallVirtual(position, environment, METHOD_XOR, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_XOR, left, right.cast(position, environment, INSTANCE));
 			case CONTAINS:
-				return new ExpressionCallVirtual(position, environment, METHOD_CONTAINS, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_CONTAINS, left, right.cast(position, environment, INSTANCE));
 			case INDEXGET:
-				return new ExpressionCallVirtual(position, environment, METHOD_INDEXGET, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_INDEXGET, left, right.cast(position, environment, INSTANCE));
 			case RANGE:
-				return new ExpressionCallVirtual(position, environment, METHOD_RANGE, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_RANGE, left, right.cast(position, environment, INSTANCE));
 			case COMPARE:
-				return new ExpressionCallVirtual(position, environment, METHOD_COMPARETO, left, right.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_COMPARETO, left, right.cast(position, environment, INSTANCE));
 			case MEMBERGETTER:
-				return new ExpressionCallVirtual(position, environment, METHOD_MEMBERGET, left, right.cast(position, environment, STRING));
+				return new ExpressionCallVirtual(position, environment, METHOD_MEMBERGET, left, right.cast(position, environment, ZenTypeString.INSTANCE));
 			default:
-				return new ExpressionInvalid(position, ANY);
+				return new ExpressionInvalid(position, INSTANCE);
 		}
 	}
 
@@ -171,11 +171,11 @@ public class ZenTypeAny extends ZenType {
 	public Expression trinary(ZenPosition position, IEnvironmentGlobal environment, Expression first, Expression second, Expression third, OperatorType operator) {
 		switch (operator) {
 			case INDEXSET:
-				return new ExpressionCallVirtual(position, environment, METHOD_INDEXSET, first, second.cast(position, environment, ANY), third.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_INDEXSET, first, second.cast(position, environment, INSTANCE), third.cast(position, environment, INSTANCE));
 			case MEMBERSETTER:
-				return new ExpressionCallVirtual(position, environment, METHOD_MEMBERSET, first, second.cast(position, environment, STRING), third.cast(position, environment, ANY));
+				return new ExpressionCallVirtual(position, environment, METHOD_MEMBERSET, first, second.cast(position, environment, ZenTypeString.INSTANCE), third.cast(position, environment, INSTANCE));
 			default:
-				return new ExpressionInvalid(position, ANY);
+				return new ExpressionInvalid(position, INSTANCE);
 		}
 	}
 
@@ -208,7 +208,7 @@ public class ZenTypeAny extends ZenType {
 	public ZenType[] predictCallTypes(int numArguments) {
 		ZenType[] result = new ZenType[numArguments];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = ANY;
+			result[i] = INSTANCE;
 		}
 		return result;
 	}

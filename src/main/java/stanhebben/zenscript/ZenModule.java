@@ -29,7 +29,7 @@ import stanhebben.zenscript.statements.Statement;
 import stanhebben.zenscript.statements.StatementReturn;
 import stanhebben.zenscript.symbols.SymbolArgument;
 import stanhebben.zenscript.symbols.SymbolZenStaticMethod;
-import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeVoid;
 import stanhebben.zenscript.util.MethodOutput;
 import static stanhebben.zenscript.util.ZenTypeUtil.internal;
 
@@ -97,7 +97,7 @@ public class ZenModule {
 				for (Statement statement : statements) {
 					statement.compile(methodEnvironment);
 				}
-				if (function.getValue().getReturnType() != ZenType.VOID) {
+				if (function.getValue().getReturnType() != ZenTypeVoid.INSTANCE) {
 					if (statements[statements.length - 1] instanceof StatementReturn) {
 						if (((StatementReturn) statements[statements.length - 1]).getExpression() != null) {
 							fn.getReturnType()

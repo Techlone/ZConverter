@@ -8,6 +8,8 @@ package stanhebben.zenscript.type.casting;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeDouble;
+import stanhebben.zenscript.type.ZenTypeLong;
 
 /**
  *
@@ -25,11 +27,11 @@ public class CastingRuleL2D extends BaseCastingRule {
 
 	@Override
 	public ZenType getInnerInputType() {
-		return ZenType.LONG;
+		return ZenTypeLong.INSTANCE;
 	}
 
 	@Override
 	public ZenType getResultingType() {
-		return ZenType.DOUBLE;
+		return ZenTypeDouble.INSTANCE;
 	}
 }

@@ -18,6 +18,7 @@ import stanhebben.zenscript.util.MethodOutput;
 import stanhebben.zenscript.util.ZenPosition;
 
 public class ZenTypeArrayBasic extends ZenTypeArray {
+	public static final ZenTypeArrayBasic INSTANCE = new ZenTypeArrayBasic(ZenTypeAny.INSTANCE);
 	private Type asmType;
 
 	public ZenTypeArrayBasic(ZenType base) {
@@ -44,12 +45,12 @@ public class ZenTypeArrayBasic extends ZenTypeArray {
 	@Override
 	public ICastingRule getCastingRule(ZenType type, IEnvironmentGlobal environment) {
 		ICastingRule base = super.getCastingRule(type, environment);
-		if (base == null && getBaseType() == ANY && type instanceof ZenTypeArray) {
+		if (base == null && getBaseType() == ZenTypeAny.INSTANCE && type instanceof ZenTypeArray) {
 			ZenType toBaseType = ((ZenTypeArray) type).getBaseType();
 			if (type instanceof ZenTypeArrayBasic) {
-				return new CastingRuleArrayArray(ANY.getCastingRule(toBaseType, environment), this, (ZenTypeArrayBasic) type);
+				return new CastingRuleArrayArray(ZenTypeAny.INSTANCE.getCastingRule(toBaseType, environment), this, (ZenTypeArrayBasic) type);
 			} else if (type instanceof ZenTypeArrayList) {
-				return new CastingRuleArrayList(ANY.getCastingRule(toBaseType, environment), this, (ZenTypeArrayList) type);
+				return new CastingRuleArrayList(ZenTypeAny.INSTANCE.getCastingRule(toBaseType, environment), this, (ZenTypeArrayList) type);
 			} else {
 				throw new RuntimeException("Invalid array type: " + type);
 			}
@@ -114,7 +115,7 @@ public class ZenTypeArrayBasic extends ZenTypeArray {
 		return new ExpressionArrayGet(
 				position,
 				array,
-				index.cast(position, environment, INT));
+				index.cast(position, environment, ZenTypeInt.INSTANCE));
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class ZenTypeArrayBasic extends ZenTypeArray {
 		return new ExpressionArraySet(
 				position,
 				array,
-				index.cast(position, environment, INT),
+				index.cast(position, environment, ZenTypeInt.INSTANCE),
 				value.cast(position, environment, getBaseType()));
 	}
 
@@ -212,7 +213,7 @@ public class ZenTypeArrayBasic extends ZenTypeArray {
 
 		@Override
 		public ZenType getType(int i) {
-			return i == 0 ? INT : getBaseType();
+			return i == 0 ? ZenTypeInt.INSTANCE : getBaseType();
 		}
 	}
 }

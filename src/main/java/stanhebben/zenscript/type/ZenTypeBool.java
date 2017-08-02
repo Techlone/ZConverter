@@ -16,8 +16,6 @@ import stanhebben.zenscript.expression.ExpressionArithmeticUnary;
 import stanhebben.zenscript.expression.ExpressionBool;
 import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
-import static stanhebben.zenscript.type.ZenType.BYTE;
-import static stanhebben.zenscript.type.ZenType.STRING;
 import stanhebben.zenscript.type.casting.CastingRuleStaticMethod;
 import stanhebben.zenscript.type.casting.ICastingRuleDelegate;
 import stanhebben.zenscript.type.natives.JavaMethod;
@@ -50,10 +48,10 @@ public class ZenTypeBool extends ZenType {
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(STRING, new CastingRuleStaticMethod(BOOL_TOSTRING_STATIC));
-		rules.registerCastingRule(BOOLOBJECT, new CastingRuleStaticMethod(BOOL_VALUEOF));
-		rules.registerCastingRule(ANY, new CastingRuleStaticMethod(JavaMethod.getStatic(
-				getAnyClassName(environment), "valueOf", ANY, BOOL
+		rules.registerCastingRule(ZenTypeString.INSTANCE, new CastingRuleStaticMethod(BOOL_TOSTRING_STATIC));
+		rules.registerCastingRule(ZenTypeBoolObject.INSTANCE, new CastingRuleStaticMethod(BOOL_VALUEOF));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleStaticMethod(JavaMethod.getStatic(
+				getAnyClassName(environment), "valueOf", ZenTypeAny.INSTANCE, INSTANCE
 			)));
 
 		if (followCasters) {
@@ -105,30 +103,30 @@ public class ZenTypeBool extends ZenType {
 	@Override
 	public Expression binary(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, OperatorType operator) {
 		if (operator == OperatorType.CAT) {
-			return STRING.binary(
+			return ZenTypeString.INSTANCE.binary(
 					position,
 					environment,
-					left.cast(position, environment, STRING),
-					right.cast(position, environment, STRING), OperatorType.CAT);
+					left.cast(position, environment, ZenTypeString.INSTANCE),
+					right.cast(position, environment, ZenTypeString.INSTANCE), OperatorType.CAT);
 		}
 
-		if (right.getType().canCastImplicit(BOOL, environment)) {
+		if (right.getType().canCastImplicit(INSTANCE, environment)) {
 			switch (operator) {
 				case AND:
 				case OR:
 				case XOR:
-					if (right.getType() != BOOL) {
-						right = right.cast(position, environment, BOOL);
+					if (right.getType() != INSTANCE) {
+						right = right.cast(position, environment, INSTANCE);
 					}
 
 					return new ExpressionArithmeticBinary(position, operator, left, right);
 				default:
 					environment.error(position, "unsupported bool operator: " + operator);
-					return new ExpressionInvalid(position, BOOL);
+					return new ExpressionInvalid(position, INSTANCE);
 			}
 		} else {
 			environment.error(right.getPosition(), "not a valid bool value");
-			return new ExpressionInvalid(position, BOOL);
+			return new ExpressionInvalid(position, INSTANCE);
 		}
 	}
 
@@ -136,7 +134,7 @@ public class ZenTypeBool extends ZenType {
 	public Expression trinary(
 			ZenPosition position, IEnvironmentGlobal environment, Expression first, Expression second, Expression third, OperatorType operator) {
 		environment.error(position, "operation not supported on a bool value");
-		return new ExpressionInvalid(position, BOOL);
+		return new ExpressionInvalid(position, INSTANCE);
 	}
 
 	@Override
@@ -146,7 +144,7 @@ public class ZenTypeBool extends ZenType {
 			return new ExpressionArithmeticCompare(position, type, left, right);
 		} else {
 			environment.error(position, "such comparison not supported on a bool");
-			return new ExpressionInvalid(position, BOOL);
+			return new ExpressionInvalid(position, INSTANCE);
 		}
 	}
 
@@ -280,7 +278,7 @@ public class ZenTypeBool extends ZenType {
 
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCanCastImplicit(BOOL, output, environment, 0);
+				expansion.compileAnyCanCastImplicit(INSTANCE, output, environment, 0);
 			}
 
 			output.iConst0();
@@ -295,7 +293,7 @@ public class ZenTypeBool extends ZenType {
 		public void defineStaticAs(MethodOutput output) {
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(BOOL, output, environment, 0, 1);
+				expansion.compileAnyCast(INSTANCE, output, environment, 0, 1);
 			}
 
 			throwCastException(output, "bool", 1);
@@ -339,7 +337,7 @@ public class ZenTypeBool extends ZenType {
 			METHOD_ASSTRING.invokeVirtual(output);
 			output.invokeVirtual(StringBuilder.class, "append", StringBuilder.class, String.class);
 			output.invokeVirtual(StringBuilder.class, "toString", String.class);
-			output.invokeStatic(STRING.getAnyClassName(environment), "valueOf", "(Ljava/lang/String;)" + signature(IAny.class));
+			output.invokeStatic(ZenTypeString.INSTANCE.getAnyClassName(environment), "valueOf", "(Ljava/lang/String;)" + signature(IAny.class));
 			output.returnObject();
 		}
 
@@ -498,7 +496,7 @@ public class ZenTypeBool extends ZenType {
 			output.store(Type.BYTE_TYPE, localValue);
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(BYTE, output, environment, localValue, 1);
+				expansion.compileAnyCast(ZenTypeByte.INSTANCE, output, environment, localValue, 1);
 			}
 
 			throwCastException(output, "bool", 1);

@@ -16,7 +16,6 @@ import stanhebben.zenscript.expression.ExpressionArithmeticUnary;
 import stanhebben.zenscript.expression.ExpressionInt;
 import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
-import static stanhebben.zenscript.type.ZenTypeAny.*;
 import stanhebben.zenscript.type.casting.CastingRuleI2D;
 import stanhebben.zenscript.type.casting.CastingRuleI2F;
 import stanhebben.zenscript.type.casting.CastingRuleI2L;
@@ -52,20 +51,20 @@ public class ZenTypeByte extends ZenType {
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(BYTEOBJECT, new CastingRuleStaticMethod(BYTE_VALUEOF));
-		rules.registerCastingRule(SHORT, new CastingRuleNone(BYTE, SHORT));
-		rules.registerCastingRule(SHORTOBJECT, new CastingRuleStaticMethod(SHORT_VALUEOF));
-		rules.registerCastingRule(INT, new CastingRuleNone(BYTE, INT));
-		rules.registerCastingRule(INTOBJECT, new CastingRuleStaticMethod(INT_VALUEOF));
-		rules.registerCastingRule(LONG, new CastingRuleI2L(null));
-		rules.registerCastingRule(LONGOBJECT, new CastingRuleStaticMethod(LONG_VALUEOF, new CastingRuleI2L(null)));
-		rules.registerCastingRule(FLOAT, new CastingRuleI2F(null));
-		rules.registerCastingRule(FLOATOBJECT, new CastingRuleStaticMethod(FLOAT_VALUEOF, new CastingRuleI2F(null)));
-		rules.registerCastingRule(DOUBLE, new CastingRuleI2D(null));
-		rules.registerCastingRule(DOUBLEOBJECT, new CastingRuleStaticMethod(DOUBLE_VALUEOF, new CastingRuleI2D(null)));
+		rules.registerCastingRule(ZenTypeByteObject.INSTANCE, new CastingRuleStaticMethod(BYTE_VALUEOF));
+		rules.registerCastingRule(ZenTypeShort.INSTANCE, new CastingRuleNone(INSTANCE, ZenTypeShort.INSTANCE));
+		rules.registerCastingRule(ZenTypeShortObject.INSTANCE, new CastingRuleStaticMethod(SHORT_VALUEOF));
+		rules.registerCastingRule(ZenTypeInt.INSTANCE, new CastingRuleNone(INSTANCE, ZenTypeInt.INSTANCE));
+		rules.registerCastingRule(ZenTypeIntObject.INSTANCE, new CastingRuleStaticMethod(INT_VALUEOF));
+		rules.registerCastingRule(ZenTypeLong.INSTANCE, new CastingRuleI2L(null));
+		rules.registerCastingRule(ZenTypeLongObject.INSTANCE, new CastingRuleStaticMethod(LONG_VALUEOF, new CastingRuleI2L(null)));
+		rules.registerCastingRule(ZenTypeFloat.INSTANCE, new CastingRuleI2F(null));
+		rules.registerCastingRule(ZenTypeFloatObject.INSTANCE, new CastingRuleStaticMethod(FLOAT_VALUEOF, new CastingRuleI2F(null)));
+		rules.registerCastingRule(ZenTypeDouble.INSTANCE, new CastingRuleI2D(null));
+		rules.registerCastingRule(ZenTypeDoubleObject.INSTANCE, new CastingRuleStaticMethod(DOUBLE_VALUEOF, new CastingRuleI2D(null)));
 
-		rules.registerCastingRule(STRING, new CastingRuleStaticMethod(BYTE_TOSTRING_STATIC));
-		rules.registerCastingRule(ANY, new CastingRuleStaticMethod(JavaMethod.getStatic(getAnyClassName(environment), "valueOf", ANY, BYTE)));
+		rules.registerCastingRule(ZenTypeString.INSTANCE, new CastingRuleStaticMethod(BYTE_TOSTRING_STATIC));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleStaticMethod(JavaMethod.getStatic(getAnyClassName(environment), "valueOf", ZenTypeAny.INSTANCE, INSTANCE)));
 
 		if (followCasters) {
 			constructExpansionCastingRules(environment, rules);
@@ -167,11 +166,11 @@ public class ZenTypeByte extends ZenType {
 	@Override
 	public Expression binary(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, OperatorType operator) {
 		if (operator == OperatorType.CAT) {
-			return STRING.binary(
+			return ZenTypeString.INSTANCE.binary(
 					position,
 					environment,
-					left.cast(position, environment, STRING),
-					right.cast(position, environment, STRING), OperatorType.CAT);
+					left.cast(position, environment, ZenTypeString.INSTANCE),
+					right.cast(position, environment, ZenTypeString.INSTANCE), OperatorType.CAT);
 		}
 
 		return new ExpressionArithmeticBinary(position, operator, left, right.cast(position, environment, this));
@@ -212,7 +211,7 @@ public class ZenTypeByte extends ZenType {
 
 	@Override
 	public Expression defaultValue(ZenPosition position) {
-		return new ExpressionInt(position, 0, ZenType.BYTE);
+		return new ExpressionInt(position, 0, INSTANCE);
 	}
 
 	private class AnyDefinitionByte implements IAnyDefinition {
@@ -276,7 +275,7 @@ public class ZenTypeByte extends ZenType {
 
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCanCastImplicit(BYTE, output, environment, 0);
+				expansion.compileAnyCanCastImplicit(INSTANCE, output, environment, 0);
 			}
 
 			output.iConst0();
@@ -291,7 +290,7 @@ public class ZenTypeByte extends ZenType {
 		public void defineStaticAs(MethodOutput output) {
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(BYTE, output, environment, 0, 1);
+				expansion.compileAnyCast(INSTANCE, output, environment, 0, 1);
 			}
 
 			throwCastException(output, "byte", 1);
@@ -356,7 +355,7 @@ public class ZenTypeByte extends ZenType {
 			METHOD_ASSTRING.invokeVirtual(output);
 			output.invokeVirtual(StringBuilder.class, "append", StringBuilder.class, String.class);
 			output.invokeVirtual(StringBuilder.class, "toString", String.class);
-			output.invokeStatic(STRING.getAnyClassName(environment), "valueOf", "(Ljava/lang/String;)" + signature(IAny.class));
+			output.invokeStatic(ZenTypeString.INSTANCE.getAnyClassName(environment), "valueOf", "(Ljava/lang/String;)" + signature(IAny.class));
 			output.returnObject();
 		}
 
@@ -547,7 +546,7 @@ public class ZenTypeByte extends ZenType {
 			output.store(Type.BYTE_TYPE, localValue);
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(BYTE, output, environment, localValue, 1);
+				expansion.compileAnyCast(INSTANCE, output, environment, localValue, 1);
 			}
 
 			throwCastException(output, "byte", 1);

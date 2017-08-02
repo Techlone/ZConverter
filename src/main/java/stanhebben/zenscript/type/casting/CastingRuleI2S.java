@@ -8,6 +8,8 @@ package stanhebben.zenscript.type.casting;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeInt;
+import stanhebben.zenscript.type.ZenTypeShort;
 
 /**
  *
@@ -25,11 +27,11 @@ public class CastingRuleI2S extends BaseCastingRule {
 
 	@Override
 	public ZenType getInnerInputType() {
-		return ZenType.INT;
+		return ZenTypeInt.INSTANCE;
 	}
 
 	@Override
 	public ZenType getResultingType() {
-		return ZenType.SHORT;
+		return ZenTypeShort.INSTANCE;
 	}
 }

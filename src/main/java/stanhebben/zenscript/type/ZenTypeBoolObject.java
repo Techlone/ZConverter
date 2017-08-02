@@ -14,7 +14,6 @@ import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.expression.ExpressionNull;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
-import static stanhebben.zenscript.type.ZenType.BOOL;
 import stanhebben.zenscript.type.casting.CastingRuleNullableStaticMethod;
 import stanhebben.zenscript.type.casting.CastingRuleNullableVirtualMethod;
 import stanhebben.zenscript.type.casting.CastingRuleVirtualMethod;
@@ -35,53 +34,53 @@ public class ZenTypeBoolObject extends ZenType {
 
 	@Override
 	public Expression unary(ZenPosition position, IEnvironmentGlobal environment, Expression value, OperatorType operator) {
-		return BOOL.unary(position, environment, value.cast(position, environment, ZenType.BOOL), operator);
+		return ZenTypeBool.INSTANCE.unary(position, environment, value.cast(position, environment, ZenTypeBool.INSTANCE), operator);
 	}
 
 	@Override
 	public Expression binary(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, OperatorType operator) {
-		return BOOL.binary(position, environment, left.cast(position, environment, BOOL), right, operator);
+		return ZenTypeBool.INSTANCE.binary(position, environment, left.cast(position, environment, ZenTypeBool.INSTANCE), right, operator);
 	}
 
 	@Override
 	public Expression trinary(ZenPosition position, IEnvironmentGlobal environment, Expression first, Expression second, Expression third, OperatorType operator) {
-		return BOOL.trinary(position, environment, first.cast(position, environment, BOOL), second, third, operator);
+		return ZenTypeBool.INSTANCE.trinary(position, environment, first.cast(position, environment, ZenTypeBool.INSTANCE), second, third, operator);
 	}
 
 	@Override
 	public Expression compare(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, CompareType type) {
-		return BOOL.compare(position, environment, left.cast(position, environment, BOOL), right, type);
+		return ZenTypeBool.INSTANCE.compare(position, environment, left.cast(position, environment, ZenTypeBool.INSTANCE), right, type);
 	}
 
 	@Override
 	public IPartialExpression getMember(ZenPosition position, IEnvironmentGlobal environment, IPartialExpression value, String name) {
-		return BOOL.getMember(position, environment, value.eval(environment).cast(position, environment, BOOL), name);
+		return ZenTypeBool.INSTANCE.getMember(position, environment, value.eval(environment).cast(position, environment, ZenTypeBool.INSTANCE), name);
 	}
 
 	@Override
 	public IPartialExpression getStaticMember(ZenPosition position, IEnvironmentGlobal environment, String name) {
-		return BOOL.getStaticMember(position, environment, name);
+		return ZenTypeBool.INSTANCE.getStaticMember(position, environment, name);
 	}
 
 	@Override
 	public Expression call(ZenPosition position, IEnvironmentGlobal environment, Expression receiver, Expression... arguments) {
-		return BOOL.call(position, environment, receiver.cast(position, environment, BOOL), arguments);
+		return ZenTypeBool.INSTANCE.call(position, environment, receiver.cast(position, environment, ZenTypeBool.INSTANCE), arguments);
 	}
 
 	@Override
 	public IZenIterator makeIterator(int numValues, IEnvironmentMethod methodOutput) {
-		return BOOL.makeIterator(numValues, methodOutput);
+		return ZenTypeBool.INSTANCE.makeIterator(numValues, methodOutput);
 	}
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(BOOL, new CastingRuleVirtualMethod(BOOL_VALUE));
-		rules.registerCastingRule(STRING, new CastingRuleNullableVirtualMethod(BOOL, BOOL_TOSTRING));
-		rules.registerCastingRule(ANY, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
-				BOOL.getAnyClassName(environment),
+		rules.registerCastingRule(ZenTypeBool.INSTANCE, new CastingRuleVirtualMethod(BOOL_VALUE));
+		rules.registerCastingRule(ZenTypeString.INSTANCE, new CastingRuleNullableVirtualMethod(ZenTypeBool.INSTANCE, BOOL_TOSTRING));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
+				ZenTypeBool.INSTANCE.getAnyClassName(environment),
 				"valueOf",
-				ANY,
-				BOOL
+                ZenTypeAny.INSTANCE,
+				ZenTypeBool.INSTANCE
 			), new CastingRuleVirtualMethod(BOOL_VALUE)));
 	}
 
@@ -152,7 +151,7 @@ public class ZenTypeBoolObject extends ZenType {
 
 	@Override
 	public String getAnyClassName(IEnvironmentGlobal environment) {
-		return BOOL.getAnyClassName(environment);
+		return ZenTypeBool.INSTANCE.getAnyClassName(environment);
 	}
 
 	/*

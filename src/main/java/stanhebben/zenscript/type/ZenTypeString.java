@@ -20,7 +20,6 @@ import stanhebben.zenscript.expression.ExpressionStringConcat;
 import stanhebben.zenscript.expression.ExpressionStringContains;
 import stanhebben.zenscript.expression.ExpressionStringIndex;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
-import static stanhebben.zenscript.type.ZenType.BYTE;
 import stanhebben.zenscript.type.casting.CastingRuleNullableStaticMethod;
 import stanhebben.zenscript.type.casting.CastingRuleStaticMethod;
 import stanhebben.zenscript.type.casting.ICastingRuleDelegate;
@@ -55,25 +54,25 @@ public class ZenTypeString extends ZenType {
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(BOOL, new CastingRuleStaticMethod(PARSE_BOOL));
-		rules.registerCastingRule(BOOLOBJECT, new CastingRuleNullableStaticMethod(PARSE_BOOL_OBJECT));
-		rules.registerCastingRule(BYTE, new CastingRuleStaticMethod(PARSE_BYTE));
-		rules.registerCastingRule(BYTEOBJECT, new CastingRuleNullableStaticMethod(PARSE_BYTE_OBJECT));
-		rules.registerCastingRule(SHORT, new CastingRuleStaticMethod(PARSE_SHORT));
-		rules.registerCastingRule(SHORTOBJECT, new CastingRuleNullableStaticMethod(PARSE_SHORT_OBJECT));
-		rules.registerCastingRule(INT, new CastingRuleStaticMethod(PARSE_INT));
-		rules.registerCastingRule(INTOBJECT, new CastingRuleNullableStaticMethod(PARSE_INT_OBJECT));
-		rules.registerCastingRule(LONG, new CastingRuleStaticMethod(PARSE_LONG));
-		rules.registerCastingRule(LONGOBJECT, new CastingRuleNullableStaticMethod(PARSE_LONG_OBJECT));
-		rules.registerCastingRule(FLOAT, new CastingRuleStaticMethod(PARSE_FLOAT));
-		rules.registerCastingRule(FLOATOBJECT, new CastingRuleNullableStaticMethod(PARSE_FLOAT_OBJECT));
-		rules.registerCastingRule(DOUBLE, new CastingRuleStaticMethod(PARSE_DOUBLE));
-		rules.registerCastingRule(DOUBLEOBJECT, new CastingRuleNullableStaticMethod(PARSE_DOUBLE_OBJECT));
-		rules.registerCastingRule(ANY, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
+		rules.registerCastingRule(ZenTypeBool.INSTANCE, new CastingRuleStaticMethod(PARSE_BOOL));
+		rules.registerCastingRule(ZenTypeBoolObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_BOOL_OBJECT));
+		rules.registerCastingRule(ZenTypeByte.INSTANCE, new CastingRuleStaticMethod(PARSE_BYTE));
+		rules.registerCastingRule(ZenTypeByteObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_BYTE_OBJECT));
+		rules.registerCastingRule(ZenTypeShort.INSTANCE, new CastingRuleStaticMethod(PARSE_SHORT));
+		rules.registerCastingRule(ZenTypeShortObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_SHORT_OBJECT));
+		rules.registerCastingRule(ZenTypeInt.INSTANCE, new CastingRuleStaticMethod(PARSE_INT));
+		rules.registerCastingRule(ZenTypeIntObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_INT_OBJECT));
+		rules.registerCastingRule(ZenTypeLong.INSTANCE, new CastingRuleStaticMethod(PARSE_LONG));
+		rules.registerCastingRule(ZenTypeLongObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_LONG_OBJECT));
+		rules.registerCastingRule(ZenTypeFloat.INSTANCE, new CastingRuleStaticMethod(PARSE_FLOAT));
+		rules.registerCastingRule(ZenTypeFloatObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_FLOAT_OBJECT));
+		rules.registerCastingRule(ZenTypeDouble.INSTANCE, new CastingRuleStaticMethod(PARSE_DOUBLE));
+		rules.registerCastingRule(ZenTypeDoubleObject.INSTANCE, new CastingRuleNullableStaticMethod(PARSE_DOUBLE_OBJECT));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleNullableStaticMethod(JavaMethod.getStatic(
 				getAnyClassName(environment),
 				"valueOf",
-				ANY,
-				STRING
+                ZenTypeAny.INSTANCE,
+				INSTANCE
 			)));
 
 		if (followCasters) {
@@ -198,7 +197,7 @@ public class ZenTypeString extends ZenType {
 				((ExpressionStringConcat) left).add(right.cast(position, environment, this));
 				return left;
 			} else {
-				if (right.getType().canCastImplicit(STRING, environment)) {
+				if (right.getType().canCastImplicit(INSTANCE, environment)) {
 					List<Expression> values = new ArrayList<Expression>();
 					values.add(left);
 					values.add(right.cast(position, environment, this));
@@ -214,9 +213,9 @@ public class ZenTypeString extends ZenType {
 				}
 			}
 		} else if (operator == OperatorType.INDEXGET) {
-			return new ExpressionStringIndex(position, left, right.cast(position, environment, INT));
+			return new ExpressionStringIndex(position, left, right.cast(position, environment, ZenTypeInt.INSTANCE));
 		} else if (operator == OperatorType.CONTAINS) {
-			return new ExpressionStringContains(position, left, right.cast(position, environment, STRING));
+			return new ExpressionStringContains(position, left, right.cast(position, environment, INSTANCE));
 		} else {
 			Expression result = binaryExpansion(position, environment, left, right, operator);
 			if (result == null) {
@@ -243,14 +242,14 @@ public class ZenTypeString extends ZenType {
 	@Override
 	public Expression compare(
 			ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, CompareType type) {
-		if (right.getType().canCastImplicit(STRING, environment)) {
+		if (right.getType().canCastImplicit(INSTANCE, environment)) {
 			return new ExpressionCompareGeneric(position, new ExpressionCallVirtual(position, environment, METHOD_ASINT, left, right), type);
 		}
 
 		Expression result = binaryExpansion(position, environment, left, right, OperatorType.COMPARE);
 		if (result == null) {
 			environment.error(position, "cannot compare strings");
-			return new ExpressionInvalid(position, BOOL);
+			return new ExpressionInvalid(position, ZenTypeBool.INSTANCE);
 		} else {
 			return new ExpressionCompareGeneric(position, result, type);
 		}
@@ -338,7 +337,7 @@ public class ZenTypeString extends ZenType {
 			output.label(lblOthers);
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCanCastImplicit(STRING, output, environment, 0);
+				expansion.compileAnyCanCastImplicit(INSTANCE, output, environment, 0);
 			}
 
 			output.iConst0();
@@ -349,7 +348,7 @@ public class ZenTypeString extends ZenType {
 		public void defineStaticAs(MethodOutput output) {
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(STRING, output, environment, 0, 1);
+				expansion.compileAnyCast(INSTANCE, output, environment, 0, 1);
 			}
 
 			throwCastException(output, "string", 1);
@@ -558,7 +557,7 @@ public class ZenTypeString extends ZenType {
 			output.store(type, localValue);
 			TypeExpansion expansion = environment.getExpansion(getName());
 			if (expansion != null) {
-				expansion.compileAnyCast(STRING, output, environment, localValue, 1);
+				expansion.compileAnyCast(INSTANCE, output, environment, localValue, 1);
 			}
 
 			throwCastException(output, "string", 1);

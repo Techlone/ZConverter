@@ -14,6 +14,7 @@ import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.symbols.SymbolJavaStaticGetter;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.type.natives.IJavaMethod;
 import stanhebben.zenscript.util.ZenPosition;
 
@@ -70,6 +71,6 @@ public class PartialStaticGetter implements IPartialExpression {
 	@Override
 	public ZenType toType(IEnvironmentGlobal environment) {
 		environment.error(position, "not a valid type");
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 }

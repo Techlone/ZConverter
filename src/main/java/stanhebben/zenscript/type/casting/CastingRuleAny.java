@@ -8,6 +8,7 @@ package stanhebben.zenscript.type.casting;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.value.IAny;
 
 /**
@@ -29,7 +30,7 @@ public class CastingRuleAny implements ICastingRule {
 
 	@Override
 	public ZenType getInputType() {
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 
 	@Override

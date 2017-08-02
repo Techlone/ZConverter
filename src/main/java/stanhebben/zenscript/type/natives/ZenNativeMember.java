@@ -18,6 +18,8 @@ import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.type.ZenType;
 import static stanhebben.zenscript.util.StringUtil.methodMatchingError;
+
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -118,7 +120,7 @@ public class ZenNativeMember {
 		@Override
 		public ZenType toType(IEnvironmentGlobal environment) {
 			environment.error(position, "not a valid type");
-			return ZenType.ANY;
+			return ZenTypeAny.INSTANCE;
 		}
 	}
 
@@ -173,7 +175,7 @@ public class ZenNativeMember {
 		@Override
 		public ZenType toType(IEnvironmentGlobal environment) {
 			environment.error(position, "not a valid type");
-			return ZenType.ANY;
+			return ZenTypeAny.INSTANCE;
 		}
 	}
 

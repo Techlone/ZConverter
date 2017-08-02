@@ -1,6 +1,7 @@
 package stanhebben.zenscript.statements;
 
 import org.objectweb.asm.Label;
+import org.prank.ZConverter;
 import stanhebben.zenscript.compiler.EnvironmentScope;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
@@ -8,6 +9,7 @@ import stanhebben.zenscript.parser.expression.ParsedExpression;
 import stanhebben.zenscript.type.IZenIterator;
 import stanhebben.zenscript.type.ZenType;
 import stanhebben.zenscript.symbols.SymbolLocal;
+import stanhebben.zenscript.type.ZenTypeArrayBasic;
 import stanhebben.zenscript.util.MethodOutput;
 import stanhebben.zenscript.util.ZenPosition;
 
@@ -26,7 +28,7 @@ public class StatementForeach extends Statement {
 
 	@Override
 	public void compile(IEnvironmentMethod environment) {
-		Expression cList = list.compile(environment, ZenType.ANYARRAY).eval(environment);
+		Expression cList = list.compile(environment, ZenTypeArrayBasic.INSTANCE).eval(environment);
 		ZenType listType = cList.getType();
 
 		IZenIterator iterator = listType.makeIterator(varnames.length, environment);
@@ -70,6 +72,6 @@ public class StatementForeach extends Statement {
 		}
 		return sb.append(" in pairs(").append(list).append(") do").append(nl)
 				.append(body).append(nl)
-				.append("end");
+				.append(ZConverter.getIndent()).append("end");
 	}
 }

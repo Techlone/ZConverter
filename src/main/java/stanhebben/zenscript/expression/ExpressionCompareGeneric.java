@@ -31,7 +31,7 @@ public class ExpressionCompareGeneric extends Expression {
 
 	@Override
 	public ZenType getType() {
-		return ZenType.BOOL;
+		return ZenTypeBool.INSTANCE;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import stanhebben.zenscript.expression.ExpressionInvalid;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.symbols.SymbolPackage;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -75,6 +76,6 @@ public class PartialPackage implements IPartialExpression {
 	@Override
 	public ZenType toType(IEnvironmentGlobal environment) {
 		environment.error(position, "not a valid type");
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 }

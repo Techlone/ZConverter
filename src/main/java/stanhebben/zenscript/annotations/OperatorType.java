@@ -15,7 +15,7 @@ public enum OperatorType {
 	OR("or"),
 	AND("and"),
 	XOR,
-	NEG,
+	NEG("-"),
 	NOT("not"),
 	INDEXSET,
 	INDEXGET,
@@ -38,7 +38,6 @@ public enum OperatorType {
 		if (luaOp != null) return luaOp;
 		throw new RuntimeException("Unknown lua operation");
 	}
-
 
 	@Override
 	public String toString() {

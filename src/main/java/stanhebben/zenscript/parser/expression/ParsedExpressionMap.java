@@ -40,7 +40,7 @@ public class ParsedExpressionMap extends ParsedExpression {
 		ZenType predictedKeyType = null;
 		ZenType predictedValueType = null;
 		ICastingRule castingRule = null;
-		ZenTypeAssociative mapType = ZenType.ANYMAP;
+		ZenTypeAssociative mapType = ZenTypeAssociative.INSTANCE;
 
 		if (predictedType instanceof ZenTypeAssociative) {
 			ZenTypeAssociative inputType = (ZenTypeAssociative) predictedType;
@@ -48,7 +48,7 @@ public class ParsedExpressionMap extends ParsedExpression {
 			predictedValueType = inputType.getValueType();
 			mapType = inputType;
 		} else {
-			castingRule = ZenType.ANYMAP.getCastingRule(predictedType, environment);
+			castingRule = ZenTypeAssociative.INSTANCE.getCastingRule(predictedType, environment);
 			if (castingRule != null) {
 				if (castingRule.getInputType() instanceof ZenTypeAssociative) {
 					ZenTypeAssociative inputType = (ZenTypeAssociative) castingRule.getInputType();

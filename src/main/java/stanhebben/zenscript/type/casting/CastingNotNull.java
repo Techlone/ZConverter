@@ -9,6 +9,7 @@ package stanhebben.zenscript.type.casting;
 import org.objectweb.asm.Label;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeBool;
 import stanhebben.zenscript.util.MethodOutput;
 
 /**
@@ -43,6 +44,6 @@ public class CastingNotNull implements ICastingRule {
 
 	@Override
 	public ZenType getResultingType() {
-		return ZenType.BOOL;
+		return ZenTypeBool.INSTANCE;
 	}
 }

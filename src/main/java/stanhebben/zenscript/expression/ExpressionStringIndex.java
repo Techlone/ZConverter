@@ -8,6 +8,7 @@ package stanhebben.zenscript.expression;
 
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeString;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -27,7 +28,7 @@ public class ExpressionStringIndex extends Expression {
 
 	@Override
 	public ZenType getType() {
-		return ZenType.STRING;
+		return ZenTypeString.INSTANCE;
 	}
 
 	@Override

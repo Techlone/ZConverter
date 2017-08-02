@@ -15,6 +15,7 @@ import stanhebben.zenscript.expression.ExpressionLocalSet;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.symbols.SymbolLocal;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -73,6 +74,6 @@ public class PartialLocal implements IPartialExpression {
 	@Override
 	public ZenType toType(IEnvironmentGlobal environment) {
 		environment.error(position, "not a valid type");
-		return ZenType.ANY;
+		return ZenTypeAny.INSTANCE;
 	}
 }

@@ -50,7 +50,7 @@ public class ExpressionArithmeticBinary extends Expression {
 			ZenType type = a.getType();
 			MethodOutput output = environment.getOutput();
 
-			if (type == ZenType.BOOL) {
+			if (type == ZenTypeBool.INSTANCE) {
 				switch (operator) {
 					case AND:
 						output.iAnd();

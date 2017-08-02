@@ -9,6 +9,7 @@ package stanhebben.zenscript.expression;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeVoid;
 import stanhebben.zenscript.type.natives.IJavaMethod;
 import stanhebben.zenscript.type.natives.JavaMethod;
 import stanhebben.zenscript.util.MethodOutput;
@@ -48,7 +49,7 @@ public class ExpressionCallStatic extends Expression {
 
 		method.invokeStatic(output);
 
-		if (method.getReturnType() != ZenType.VOID && !result) {
+		if (method.getReturnType() != ZenTypeVoid.INSTANCE && !result) {
 			output.pop(method.getReturnType().isLarge());
 		}
 	}

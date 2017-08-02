@@ -69,7 +69,7 @@ public class ZenTypeIntRange extends ZenType {
 	@Override
 	public Expression compare(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, CompareType type) {
 		environment.error(position, "cannot compare int ranges");
-		return new ExpressionInvalid(position, BOOL);
+		return new ExpressionInvalid(position, ZenTypeBool.INSTANCE);
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class ZenTypeIntRange extends ZenType {
 
 		@Override
 		public ZenType getType(int i) {
-			return INT;
+			return ZenTypeInt.INSTANCE;
 		}
 	}
 }

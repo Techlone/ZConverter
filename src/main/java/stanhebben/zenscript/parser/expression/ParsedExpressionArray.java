@@ -6,7 +6,6 @@
 
 package stanhebben.zenscript.parser.expression;
 
-import java.util.Collections;
 import java.util.List;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
@@ -37,7 +36,7 @@ public class ParsedExpressionArray extends ParsedExpression {
 	@Override
 	public IPartialExpression compile(IEnvironmentMethod environment, ZenType predictedType) {
 		ZenType predictedBaseType = null;
-		ZenTypeArrayBasic arrayType = ZenType.ANYARRAY;
+		ZenTypeArrayBasic arrayType = ZenTypeArrayBasic.INSTANCE;
 		ICastingRule castingRule = null;
 
 		if (predictedType instanceof ZenTypeArray) {
@@ -48,7 +47,7 @@ public class ParsedExpressionArray extends ParsedExpression {
 			}
 		} else {
 			// find any[] caster that casts to the given type
-			castingRule = ZenType.ANYARRAY.getCastingRule(predictedType, environment);
+			castingRule = ZenTypeArrayBasic.INSTANCE.getCastingRule(predictedType, environment);
 			if (castingRule != null) {
 				if (castingRule.getInputType() instanceof ZenTypeArray) {
 					predictedBaseType = ((ZenTypeArray) castingRule.getInputType()).getBaseType();

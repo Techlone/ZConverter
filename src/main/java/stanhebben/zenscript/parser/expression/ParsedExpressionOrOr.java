@@ -11,6 +11,7 @@ import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.expression.ExpressionOrOr;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -40,12 +41,17 @@ public class ParsedExpressionOrOr extends ParsedExpression {
 			type = cRight.getType();
 		} else {
 			environment.error(getPosition(), "These types could not be unified: " + cLeft.getType() + " and " + cRight.getType());
-			type = ZenType.ANY;
+			type = ZenTypeAny.INSTANCE;
 		}
 
 		return new ExpressionOrOr(
 				getPosition(),
 				cLeft.cast(getPosition(), environment, type),
 				cRight.cast(getPosition(), environment, type));
+	}
+
+	@Override
+	public String toLua() {
+		return left + " or " + right;
 	}
 }

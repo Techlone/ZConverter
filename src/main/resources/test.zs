@@ -8,7 +8,10 @@ for item in <ore:drawerBasic>.items {
     mods.gregtech.Assembler.addRecipe(<StorageDrawers:upgradeTemplate>, item, <minecraft:piston>, 1200, 16);
 }
 
-
+function getGreggedItem(oreDictName as string) as IItemStack {
+    return oreDict.get(oreDictName).firstItem;
+}
+var asd = oreDict.get("orediscid");
 var myLogs = [<minecraft:log:0>, <minecraft:log:1>, <minecraft:log:2>, <minecraft:log:3>, <minecraft:log:4>, <minecraft:log:5>] as IItemStack[];
 var myPlanks = [<minecraft:planks:0>, <minecraft:planks:1>, <minecraft:planks:2>, <minecraft:planks:3>, <minecraft:planks:4>, <minecraft:planks:5>] as IItemStack[];
 
@@ -19,7 +22,11 @@ var diamondAxe = <minecraft:diamond_axe>.anyDamage().transformDamage();
 
 for i, log in myLogs {
     var plank = myPlanks[i];
-
+    for pick in picks {
+        if pick >= 2 && pick <= 1 || !pick {
+          print(pick + "text");
+        }
+    }
     recipes.removeShapeless(plank, [log]);
     recipes.addShapeless(plank * 2, [log]);
     recipes.addShapeless(plank * 3, [log, stoneAxe]);

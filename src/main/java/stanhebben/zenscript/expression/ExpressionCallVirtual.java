@@ -9,6 +9,7 @@ package stanhebben.zenscript.expression;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeVoid;
 import stanhebben.zenscript.type.natives.IJavaMethod;
 import stanhebben.zenscript.type.natives.JavaMethod;
 import stanhebben.zenscript.util.ZenPosition;
@@ -51,7 +52,7 @@ public class ExpressionCallVirtual extends Expression {
 		}
 
 		method.invokeVirtual(environment.getOutput());
-		if (method.getReturnType() != ZenType.VOID && !result) {
+		if (method.getReturnType() != ZenTypeVoid.INSTANCE && !result) {
 			environment.getOutput().pop(method.getReturnType().isLarge());
 		}
 	}

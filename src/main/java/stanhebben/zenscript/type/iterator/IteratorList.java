@@ -11,6 +11,7 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 import stanhebben.zenscript.type.IZenIterator;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeInt;
 import stanhebben.zenscript.util.MethodOutput;
 
 /**
@@ -64,6 +65,6 @@ public class IteratorList implements IZenIterator {
 
 	@Override
 	public ZenType getType(int i) {
-		return i == 0 ? ZenType.INT : iteratorType;
+		return i == 0 ? ZenTypeInt.INSTANCE : iteratorType;
 	}
 }

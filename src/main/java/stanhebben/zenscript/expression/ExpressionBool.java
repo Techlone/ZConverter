@@ -10,6 +10,7 @@ import org.objectweb.asm.Label;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeBool;
 import stanhebben.zenscript.util.ZenPosition;
 
 /**
@@ -27,7 +28,7 @@ public class ExpressionBool extends Expression {
 
 	@Override
 	public Expression cast(ZenPosition position, IEnvironmentGlobal environment, ZenType type) {
-		if (type == ZenType.BOOL) {
+		if (type == ZenTypeBool.INSTANCE) {
 			return this;
 		} else {
 			return super.cast(position, environment, type);
@@ -37,12 +38,12 @@ public class ExpressionBool extends Expression {
 	@Override
 	public Expression getMember(ZenPosition position, IEnvironmentGlobal environment, String name) {
 		environment.error(position, "Bool constants do not have members");
-		return new ExpressionInvalid(position, ZenType.BOOL);
+		return new ExpressionInvalid(position, ZenTypeBool.INSTANCE);
 	}
 
 	@Override
 	public ZenType getType() {
-		return ZenType.BOOL;
+		return ZenTypeBool.INSTANCE;
 	}
 
 	@Override

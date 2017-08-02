@@ -35,6 +35,7 @@ import static stanhebben.zenscript.util.ZenTypeUtil.signature;
  * @author Stanneke
  */
 public class ZenTypeAssociative extends ZenType {
+	public static final ZenTypeAssociative INSTANCE = new ZenTypeAssociative(ZenTypeAny.INSTANCE, ZenTypeAny.INSTANCE);
 	private final ZenType valueType;
 	private final ZenType keyType;
 
@@ -58,11 +59,11 @@ public class ZenTypeAssociative extends ZenType {
 	@Override
 	public ICastingRule getCastingRule(ZenType type, IEnvironmentGlobal environment) {
 		ICastingRule base = super.getCastingRule(type, environment);
-		if (base == null && type instanceof ZenTypeAssociative && keyType == ANY && valueType == ANY) {
+		if (base == null && type instanceof ZenTypeAssociative && keyType == ZenTypeAny.INSTANCE && valueType == ZenTypeAny.INSTANCE) {
 			ZenTypeAssociative aType = (ZenTypeAssociative) type;
 			return new CastingRuleMap(
-					ANY.getCastingRule(aType.keyType, environment),
-					ANY.getCastingRule(aType.valueType, environment),
+					ZenTypeAny.INSTANCE.getCastingRule(aType.keyType, environment),
+					ZenTypeAny.INSTANCE.getCastingRule(aType.valueType, environment),
 					this,
 					aType);
 		} else {
@@ -137,7 +138,7 @@ public class ZenTypeAssociative extends ZenType {
 	public IPartialExpression getMember(ZenPosition position, IEnvironmentGlobal environment, IPartialExpression value, String name) {
 		if (name.equals("length")) {
 			return new ExpressionMapSize(position, value.eval(environment));
-		} else if (STRING.canCastImplicit(keyType, environment)) {
+		} else if (ZenTypeString.INSTANCE.canCastImplicit(keyType, environment)) {
 			return new ExpressionMapIndexGet(
 					position,
 					value.eval(environment),

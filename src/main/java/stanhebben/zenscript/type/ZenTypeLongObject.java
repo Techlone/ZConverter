@@ -14,10 +14,7 @@ import stanhebben.zenscript.compiler.IEnvironmentMethod;
 import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.expression.ExpressionNull;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
-import static stanhebben.zenscript.type.ZenType.ANY;
-import static stanhebben.zenscript.type.ZenType.BYTE;
-import static stanhebben.zenscript.type.ZenType.BYTE_VALUE;
-import static stanhebben.zenscript.type.ZenType.STRING;
+
 import stanhebben.zenscript.type.casting.CastingRuleNullableStaticMethod;
 import stanhebben.zenscript.type.casting.CastingRuleNullableVirtualMethod;
 import stanhebben.zenscript.type.casting.CastingRuleVirtualMethod;
@@ -38,74 +35,74 @@ public class ZenTypeLongObject extends ZenType {
 
 	@Override
 	public Expression unary(ZenPosition position, IEnvironmentGlobal environment, Expression value, OperatorType operator) {
-		return LONG.unary(position, environment, value.cast(position, environment, LONG), operator);
+		return ZenTypeLong.INSTANCE.unary(position, environment, value.cast(position, environment, ZenTypeLong.INSTANCE), operator);
 	}
 
 	@Override
 	public Expression binary(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, OperatorType operator) {
-		return LONG.binary(position, environment, left.cast(position, environment, LONG), right, operator);
+		return ZenTypeLong.INSTANCE.binary(position, environment, left.cast(position, environment, ZenTypeLong.INSTANCE), right, operator);
 	}
 
 	@Override
 	public Expression trinary(ZenPosition position, IEnvironmentGlobal environment, Expression first, Expression second, Expression third, OperatorType operator) {
-		return LONG.trinary(position, environment, first.cast(position, environment, LONG), second, third, operator);
+		return ZenTypeLong.INSTANCE.trinary(position, environment, first.cast(position, environment, ZenTypeLong.INSTANCE), second, third, operator);
 	}
 
 	@Override
 	public Expression compare(ZenPosition position, IEnvironmentGlobal environment, Expression left, Expression right, CompareType type) {
-		return LONG.compare(position, environment, left.cast(position, environment, LONG), right, type);
+		return ZenTypeLong.INSTANCE.compare(position, environment, left.cast(position, environment, ZenTypeLong.INSTANCE), right, type);
 	}
 
 	@Override
 	public IPartialExpression getMember(ZenPosition position, IEnvironmentGlobal environment, IPartialExpression value, String name) {
-		return LONG.getMember(position, environment, value.eval(environment).cast(position, environment, LONG), name);
+		return ZenTypeLong.INSTANCE.getMember(position, environment, value.eval(environment).cast(position, environment, ZenTypeLong.INSTANCE), name);
 	}
 
 	@Override
 	public IPartialExpression getStaticMember(ZenPosition position, IEnvironmentGlobal environment, String name) {
-		return LONG.getStaticMember(position, environment, name);
+		return ZenTypeLong.INSTANCE.getStaticMember(position, environment, name);
 	}
 
 	@Override
 	public Expression call(ZenPosition position, IEnvironmentGlobal environment, Expression receiver, Expression... arguments) {
-		return LONG.call(position, environment, receiver.cast(position, environment, LONG), arguments);
+		return ZenTypeLong.INSTANCE.call(position, environment, receiver.cast(position, environment, ZenTypeLong.INSTANCE), arguments);
 	}
 
 	@Override
 	public IZenIterator makeIterator(int numValues, IEnvironmentMethod methodOutput) {
-		return LONG.makeIterator(numValues, methodOutput);
+		return ZenTypeLong.INSTANCE.makeIterator(numValues, methodOutput);
 	}
 
 	@Override
 	public void constructCastingRules(IEnvironmentGlobal environment, ICastingRuleDelegate rules, boolean followCasters) {
-		rules.registerCastingRule(BYTE, new CastingRuleVirtualMethod(BYTE_VALUE));
-		rules.registerCastingRule(BYTEOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeByte.INSTANCE, new CastingRuleVirtualMethod(BYTE_VALUE));
+		rules.registerCastingRule(ZenTypeByteObject.INSTANCE, new CastingRuleNullableStaticMethod(
 				BYTE_VALUEOF,
 				new CastingRuleVirtualMethod(BYTE_VALUE)));
-		rules.registerCastingRule(SHORT, new CastingRuleVirtualMethod(SHORT_VALUE));
-		rules.registerCastingRule(SHORTOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeShort.INSTANCE, new CastingRuleVirtualMethod(SHORT_VALUE));
+		rules.registerCastingRule(ZenTypeShortObject.INSTANCE, new CastingRuleNullableStaticMethod(
 				SHORT_VALUEOF,
 				new CastingRuleVirtualMethod(SHORT_VALUE)));
-		rules.registerCastingRule(INT, new CastingRuleVirtualMethod(INT_VALUE));
-		rules.registerCastingRule(INTOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeInt.INSTANCE, new CastingRuleVirtualMethod(INT_VALUE));
+		rules.registerCastingRule(ZenTypeIntObject.INSTANCE, new CastingRuleNullableStaticMethod(
 				INT_VALUEOF,
 				new CastingRuleVirtualMethod(INT_VALUE)));
-		rules.registerCastingRule(LONG, new CastingRuleVirtualMethod(LONG_VALUE));
-		rules.registerCastingRule(LONGOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeLong.INSTANCE, new CastingRuleVirtualMethod(LONG_VALUE));
+		rules.registerCastingRule(INSTANCE, new CastingRuleNullableStaticMethod(
 				LONG_VALUEOF,
 				new CastingRuleVirtualMethod(LONG_VALUE)));
-		rules.registerCastingRule(FLOAT, new CastingRuleVirtualMethod(FLOAT_VALUE));
-		rules.registerCastingRule(FLOATOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeFloat.INSTANCE, new CastingRuleVirtualMethod(FLOAT_VALUE));
+		rules.registerCastingRule(ZenTypeFloatObject.INSTANCE, new CastingRuleNullableStaticMethod(
 				FLOAT_VALUEOF,
 				new CastingRuleVirtualMethod(FLOAT_VALUE)));
-		rules.registerCastingRule(DOUBLE, new CastingRuleVirtualMethod(DOUBLE_VALUE));
-		rules.registerCastingRule(DOUBLEOBJECT, new CastingRuleNullableStaticMethod(
+		rules.registerCastingRule(ZenTypeDouble.INSTANCE, new CastingRuleVirtualMethod(DOUBLE_VALUE));
+		rules.registerCastingRule(ZenTypeDoubleObject.INSTANCE, new CastingRuleNullableStaticMethod(
 				DOUBLE_VALUEOF,
 				new CastingRuleVirtualMethod(DOUBLE_VALUE)));
 
-		rules.registerCastingRule(STRING, new CastingRuleNullableVirtualMethod(LONGOBJECT, LONG_TOSTRING));
-		rules.registerCastingRule(ANY, new CastingRuleNullableStaticMethod(
-				JavaMethod.getStatic(getAnyClassName(environment), "valueOf", ANY, LONG),
+		rules.registerCastingRule(ZenTypeString.INSTANCE, new CastingRuleNullableVirtualMethod(INSTANCE, LONG_TOSTRING));
+		rules.registerCastingRule(ZenTypeAny.INSTANCE, new CastingRuleNullableStaticMethod(
+				JavaMethod.getStatic(getAnyClassName(environment), "valueOf", ZenTypeAny.INSTANCE, ZenTypeLong.INSTANCE),
 				new CastingRuleVirtualMethod(LONG_VALUE)));
 
 		if (followCasters) {
@@ -184,7 +181,7 @@ public class ZenTypeLongObject extends ZenType {
 
 	@Override
 	public String getAnyClassName(IEnvironmentGlobal environment) {
-		return LONG.getAnyClassName(environment);
+		return ZenTypeLong.INSTANCE.getAnyClassName(environment);
 	}
 
 	@Override

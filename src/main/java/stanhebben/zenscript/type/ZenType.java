@@ -24,27 +24,7 @@ import stanhebben.zenscript.util.ZenPosition;
 import static stanhebben.zenscript.util.ZenTypeUtil.EMPTY_REGISTRY;
 
 public abstract class ZenType {
-	public static final ZenTypeAny ANY = ZenTypeAny.INSTANCE;
-	public static final ZenTypeBool BOOL = ZenTypeBool.INSTANCE;
-	public static final ZenTypeBoolObject BOOLOBJECT = ZenTypeBoolObject.INSTANCE;
-	public static final ZenTypeByte BYTE = ZenTypeByte.INSTANCE;
-	public static final ZenTypeByteObject BYTEOBJECT = ZenTypeByteObject.INSTANCE;
-	public static final ZenTypeShort SHORT = ZenTypeShort.INSTANCE;
-	public static final ZenTypeShortObject SHORTOBJECT = ZenTypeShortObject.INSTANCE;
-	public static final ZenTypeInt INT = ZenTypeInt.INSTANCE;
-	public static final ZenTypeIntObject INTOBJECT = ZenTypeIntObject.INSTANCE;
-	public static final ZenTypeLong LONG = ZenTypeLong.INSTANCE;
-	public static final ZenTypeLongObject LONGOBJECT = ZenTypeLongObject.INSTANCE;
-	public static final ZenTypeFloat FLOAT = ZenTypeFloat.INSTANCE;
-	public static final ZenTypeFloatObject FLOATOBJECT = ZenTypeFloatObject.INSTANCE;
-	public static final ZenTypeDouble DOUBLE = ZenTypeDouble.INSTANCE;
-	public static final ZenTypeDoubleObject DOUBLEOBJECT = ZenTypeDoubleObject.INSTANCE;
-	public static final ZenTypeString STRING = ZenTypeString.INSTANCE;
-	public static final ZenTypeVoid VOID = ZenTypeVoid.INSTANCE;
-	public static final ZenTypeNull NULL = ZenTypeNull.INSTANCE;
-
-	public static final ZenTypeArrayBasic ANYARRAY = new ZenTypeArrayBasic(ANY);
-	public static final ZenTypeAssociative ANYMAP = new ZenTypeAssociative(ANY, ANY);
+	//public static final ZenTypeNull NULL = ZenTypeNull.INSTANCE;
 
 	public static final int NUM_BYTE = 1;
 	public static final int NUM_SHORT = 2;
@@ -116,37 +96,37 @@ public abstract class ZenType {
 		Token next = parser.next();
 		switch (next.getType()) {
 			case ZenTokener.T_ANY:
-				base = ANY;
+				base = ZenTypeAny.INSTANCE;
 				break;
 			case ZenTokener.T_VOID:
-				base = VOID;
+				base = ZenTypeVoid.INSTANCE;
 				break;
 			case ZenTokener.T_BOOL:
-				base = BOOL;
+				base = ZenTypeBool.INSTANCE;
 				break;
 			case ZenTokener.T_BYTE:
-				base = BYTE;
+				base = ZenTypeByte.INSTANCE;
 				break;
 			case ZenTokener.T_SHORT:
-				base = SHORT;
+				base = ZenTypeShort.INSTANCE;
 				break;
 			case ZenTokener.T_INT:
-				base = INT;
+				base = ZenTypeInt.INSTANCE;
 				break;
 			case ZenTokener.T_LONG:
-				base = LONG;
+				base = ZenTypeLong.INSTANCE;
 				break;
 			case ZenTokener.T_FLOAT:
-				base = FLOAT;
+				base = ZenTypeFloat.INSTANCE;
 				break;
 			case ZenTokener.T_DOUBLE:
-				base = DOUBLE;
+				base = ZenTypeDouble.INSTANCE;
 				break;
 			case ZenTokener.T_STRING:
-				base = STRING;
+				base = ZenTypeString.INSTANCE;
 				break;
 			case ZenTokener.T_ID:
-				base = ANY;
+				base = ZenTypeAny.INSTANCE;
 
 				//StringBuilder typeName = new StringBuilder();
 				//typeName.append(next.getValue());

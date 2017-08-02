@@ -23,6 +23,7 @@ import stanhebben.zenscript.expression.Expression;
 import stanhebben.zenscript.expression.ExpressionCallStatic;
 import stanhebben.zenscript.expression.partial.IPartialExpression;
 import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 import stanhebben.zenscript.type.casting.ICastingRuleDelegate;
 import stanhebben.zenscript.type.expand.ZenExpandCaster;
 import stanhebben.zenscript.type.expand.ZenExpandMember;
@@ -30,8 +31,6 @@ import stanhebben.zenscript.type.natives.JavaMethod;
 import stanhebben.zenscript.type.natives.ZenNativeOperator;
 import stanhebben.zenscript.util.MethodOutput;
 import stanhebben.zenscript.util.ZenPosition;
-import static stanhebben.zenscript.util.ZenTypeUtil.signature;
-import stanhebben.zenscript.value.IAny;
 
 /**
  * Type expansions provide additional members for existing types. They can add
@@ -409,7 +408,7 @@ public class TypeExpansion {
 				output.invokeStatic(
 						returnType.getAnyClassName(environment),
 						"valueOf",
-						"(" + returnType.getSignature() + ")" + ZenType.ANY.getSignature());
+						"(" + returnType.getSignature() + ")" + ZenTypeAny.INSTANCE.getSignature());
 				output.returnObject();
 				return true;
 			}

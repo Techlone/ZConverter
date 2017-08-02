@@ -14,7 +14,7 @@ import stanhebben.zenscript.parser.Token;
 import stanhebben.zenscript.statements.Statement;
 import stanhebben.zenscript.symbols.IZenSymbol;
 import stanhebben.zenscript.symbols.SymbolType;
-import stanhebben.zenscript.type.ZenType;
+import stanhebben.zenscript.type.ZenTypeAny;
 
 /**
  * Contains a parsed file.
@@ -113,7 +113,7 @@ public class ZenParsedFile {
 					environmentScript.putValue(imprt.getRename(), type.toSymbol(), imprt.getPosition());
 				}
 			} else {
-				environmentScript.putValue(imprt.getRename(), new SymbolType(ZenType.ANY), imprt.getPosition());
+				environmentScript.putValue(imprt.getRename(), new SymbolType(ZenTypeAny.INSTANCE), imprt.getPosition());
 			}
 		}
 
