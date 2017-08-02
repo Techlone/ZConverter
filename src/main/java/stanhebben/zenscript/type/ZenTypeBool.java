@@ -35,6 +35,7 @@ import static stanhebben.zenscript.util.ZenTypeUtil.signature;
 import stanhebben.zenscript.value.IAny;
 
 public class ZenTypeBool extends ZenType {
+	public static final ZenTypeBool INSTANCE = new ZenTypeBool();
 	private static final String ANY_NAME = "any/AnyBool";
 	private static final String ANY_NAME_2 = "any.AnyBool";
 	private static final String ANY_NAME_DESC = "Lany/AnyBool;";

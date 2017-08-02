@@ -35,4 +35,9 @@ public class ExpressionString extends Expression {
 			environment.getOutput().constant(value);
 		}
 	}
+
+	@Override
+	public String toLua() {
+		return "\"" + value + "\"";
+	}
 }

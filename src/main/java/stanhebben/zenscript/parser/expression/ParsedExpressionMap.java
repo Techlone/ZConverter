@@ -76,4 +76,22 @@ public class ParsedExpressionMap extends ParsedExpression {
 			return result;
 		}
 	}
+
+	@Override
+	public String toLua() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		int size = keys.size();
+		if (size != 0)
+			sb.append(getPair(0));
+		for (int i = 1; i < size; i++)
+			sb.append(", ").append(getPair(i));
+		return sb.toString();
+	}
+
+	private String getPair(int i) {
+		ParsedExpression key = keys.get(i);
+		ParsedExpression value = values.get(i);
+		return "[" + key + "] = " + value;
+	}
 }

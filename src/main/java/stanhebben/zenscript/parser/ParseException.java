@@ -54,4 +54,15 @@ public class ParseException extends RuntimeException {
 	public String getExplanation() {
 		return message;
 	}
+
+	@Override
+	public String toString() {
+		return "ParseException{" +
+				"file=" + file +
+				", line=" + line +
+				", lineOffset=" + lineOffset +
+				", token=" + token +
+				", message='" + message + '\'' +
+				'}';
+	}
 }

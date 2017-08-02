@@ -21,12 +21,10 @@ import stanhebben.zenscript.util.ZenPosition;
  * @author Stan
  */
 public abstract class ZenTypeArray extends ZenType {
-	private final ZenType base;
-	private final String name;
+	protected final ZenType base;
 
 	public ZenTypeArray(ZenType base) {
-		this.base = base;
-		name = base + "[]";
+		this.base = base == null ? ZenTypeAny.INSTANCE : base;
 	}
 
 	public ZenType getBaseType() {
@@ -41,7 +39,7 @@ public abstract class ZenTypeArray extends ZenType {
 
 	@Override
 	public final String getName() {
-		return name;
+		return base + "[]";
 	}
 
 	@Override

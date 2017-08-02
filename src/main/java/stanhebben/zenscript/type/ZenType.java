@@ -25,7 +25,7 @@ import static stanhebben.zenscript.util.ZenTypeUtil.EMPTY_REGISTRY;
 
 public abstract class ZenType {
 	public static final ZenTypeAny ANY = ZenTypeAny.INSTANCE;
-	public static final ZenTypeBool BOOL = new ZenTypeBool();
+	public static final ZenTypeBool BOOL = ZenTypeBool.INSTANCE;
 	public static final ZenTypeBoolObject BOOLOBJECT = ZenTypeBoolObject.INSTANCE;
 	public static final ZenTypeByte BYTE = ZenTypeByte.INSTANCE;
 	public static final ZenTypeByteObject BYTEOBJECT = ZenTypeByteObject.INSTANCE;
@@ -148,20 +148,20 @@ public abstract class ZenType {
 			case ZenTokener.T_ID:
 				base = ANY;
 
-				StringBuilder typeName = new StringBuilder();
-				typeName.append(next.getValue());
+				//StringBuilder typeName = new StringBuilder();
+				//typeName.append(next.getValue());
 				IPartialExpression partial = environment.getValue(next.getValue(), next.getPosition());
 				while (parser.optional(ZenTokener.T_DOT) != null) {
-					typeName.append('.');
+					//typeName.append('.');
 
 					Token member = parser.required(ZenTokener.T_ID, "identifier expected");
-					typeName.append(member.getValue());
-					partial = partial.getMember(member.getPosition(), environment, member.getValue());
-
-					if (partial == null) {
-						environment.error(member.getPosition(), "could not find type " + typeName);
-						break;
-					}
+					//typeName.append(member.getValue());
+//					partial = partial.getMember(member.getPosition(), environment, member.getValue());
+//
+//					if (partial == null) {
+//						environment.error(member.getPosition(), "could not find type " + typeName);
+//						break;
+//					}
 				}
 				if (partial != null) {
 					base = partial.toType(environment);

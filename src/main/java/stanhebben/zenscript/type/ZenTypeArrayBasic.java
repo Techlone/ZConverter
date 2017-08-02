@@ -18,12 +18,10 @@ import stanhebben.zenscript.util.MethodOutput;
 import stanhebben.zenscript.util.ZenPosition;
 
 public class ZenTypeArrayBasic extends ZenTypeArray {
-	private final Type asmType;
+	private Type asmType;
 
 	public ZenTypeArrayBasic(ZenType base) {
 		super(base);
-
-		asmType = Type.getType("[" + base.toASMType().getDescriptor());
 	}
 
 	@Override
@@ -88,7 +86,8 @@ public class ZenTypeArrayBasic extends ZenTypeArray {
 
 	@Override
 	public Type toASMType() {
-		return asmType;
+		if (asmType != null) return asmType;
+		return asmType = Type.getType("[" + base.toASMType().getDescriptor());
 	}
 
 	@Override

@@ -35,6 +35,6 @@ public interface IPartialExpression {
 	public ZenType toType(IEnvironmentGlobal environment);
 
 	default String toLua() {
-		throw new RuntimeException("Implement me!");
+		return "--[[ Can't convert " + getClass().getSimpleName() + " ]]";
 	}
 }

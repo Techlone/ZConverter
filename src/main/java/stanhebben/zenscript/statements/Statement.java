@@ -119,6 +119,6 @@ public abstract class Statement {
 	}
 
 	StringBuilder toLua(StringBuilder sb) {
-		return sb.append("-- Can't convert ").append(getClass().getSimpleName()).append(" on line ").append(position.getLine());
+		return sb.append("--[[ Can't convert ").append(getClass().getSimpleName()).append(" on line ").append(position.getLine()).append(" ]]");
 	}
 }
